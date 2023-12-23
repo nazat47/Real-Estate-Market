@@ -10,7 +10,7 @@ const Contact = ({ listing }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`/api/v1/user/${listing.userRef}`);
+        const res = await fetch(`https://real-estate-market-backend.onrender.com/api/v1/user/${listing.userRef}`);
         const data = await res.json();
         setLandlord(data);
       } catch (error) {
@@ -21,7 +21,7 @@ const Contact = ({ listing }) => {
   }, [listing.userRef]);
   const handleEmail = async (e) => {
     e.preventDefault();
-    const res = await fetch("/api/v1/user/email", {
+    const res = await fetch("https://real-estate-market-backend.onrender.com/api/v1/user/email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

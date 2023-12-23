@@ -35,7 +35,7 @@ const CreateListings = () => {
   useEffect(() => {
     const fetchData = async () => {
       const id = params.id;
-      const res = await fetch(`/api/v1/listing/${id}`);
+      const res = await fetch(`https://real-estate-market-backend.onrender.com/api/v1/listing/${id}`);
       const data = await res.json();
       if(data.msg){
         console.log(data.msg)

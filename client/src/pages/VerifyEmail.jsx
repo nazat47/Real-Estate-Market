@@ -11,7 +11,7 @@ const VerifyEmail = () => {
   const handleOtp = async () => {
     console.log(otpData)
     try {
-      const res = await fetch("/api/v1/user/email/verify", {
+      const res = await fetch("https://real-estate-market-backend.onrender.com/api/v1/user/email/verify", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

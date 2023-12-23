@@ -29,7 +29,7 @@ const Listing = () => {
     const fetchListing = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/v1/listing/${params.id}`);
+        const res = await fetch(`https://real-estate-market-backend.onrender.com/api/v1/listing/${params.id}`);
         const data = await res.json();
         if (data.msg) {
           setError(true);

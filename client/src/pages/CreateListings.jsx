@@ -128,7 +128,7 @@ const CreateListings = () => {
       }
       setFormLoad(true);
       setFormError(false);
-      const res = await fetch("/api/v1/listing/create", {
+      const res = await fetch("https://real-estate-market-backend.onrender.com/api/v1/listing/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

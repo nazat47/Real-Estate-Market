@@ -21,7 +21,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(signInStart());
-    const res = await fetch("/api/v1/auth/login", {
+    const res = await fetch("https://real-estate-market-backend.onrender.com/api/v1/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

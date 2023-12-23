@@ -77,7 +77,7 @@ const Profile = () => {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
-      const res = await fetch(`/api/v1/user/updateuser/${currentUser._id}`, {
+      const res = await fetch(`https://real-estate-market-backend.onrender.com/api/v1/user/updateuser/${currentUser._id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

@@ -12,7 +12,7 @@ export const OAuth = () => {
       const provider = new GoogleAuthProvider();
       const auth = getAuth(app);
       const result = await signInWithPopup(auth, provider);
-      const data = await fetch("/api/v1/auth/google", {
+      const data = await fetch("https://real-estate-market-backend.onrender.com/api/v1/auth/google", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
