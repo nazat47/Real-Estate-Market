@@ -49,7 +49,7 @@ const Search = () => {
       const searchQuery = urlParams.toString();
       setLoading(true);
       setShowMore(false);
-      const res = await fetch(`/api/v1/listing/get/all?${searchQuery}`);
+      const res = await fetch(`https://real-estate-market-backend.onrender.com/api/v1/listing/get/all?${searchQuery}`);
       const data = await res.json();
       if (data.length > 8) {
         setShowMore(true);
