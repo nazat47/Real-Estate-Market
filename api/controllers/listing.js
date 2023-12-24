@@ -79,7 +79,7 @@ const getListings = async (req, res) => {
 
   const list = await listing
     .find({
-      name: { $regex: searchh, $options: 'i' },
+      address: { $regex: searchh, $options: 'i' },
       parking:parkingg,
       furnished:furnishedd,
       type:typee,
