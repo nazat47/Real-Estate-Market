@@ -4,6 +4,7 @@ import ListingItem from "../components/ListingItem";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Search = () => {
+  const REACT_APP_BASE_URL=process.env.REACT_APP_BASE_URL
   const navigate = useNavigate();
   const [sideBarData, setSideBarData] = useState({
     search: "",
@@ -49,7 +50,7 @@ const Search = () => {
       const searchQuery = urlParams.toString();
       setLoading(true);
       setShowMore(false);
-      const res = await fetch(`https://real-estate-market-backend.onrender.com/api/v1/listing/get/all?${searchQuery}`);
+      const res = await fetch(`${REACT_APP_BASE_URL}/api/v1/listing/get/all?${searchQuery}`);
       const data = await res.json();
       if (data.length > 8) {
         setShowMore(true);
@@ -112,7 +113,7 @@ const Search = () => {
     const urlParams = new URLSearchParams(window.location.search);
     urlParams.set("startIndex", startIndex);
     const searchQuery = urlParams.toString();
-    const res = await fetch(`/api/v1/listing/get/all?${searchQuery}`);
+    const res = await fetch(`${REACT_APP_BASE_URL}/api/v1/listing/get/all?${searchQuery}`);
     const data = await res.json();
     if (data.length < 9) {
       setShowMore(false);

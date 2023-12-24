@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
   signInFailure,
@@ -8,8 +8,9 @@ import {
 } from "../redux/user/UserSlice";
 import { OAuth } from "../components/OAuth";
 const Login = () => {
+  const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
   const [formData, setFormData] = useState({});
-  const {loading,error}=useSelector((state)=>state.user)
+  const { loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const HandleChange = (e) => {
@@ -21,7 +22,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(signInStart());
-    const res = await fetch("https://real-estate-market-backend.onrender.com/api/v1/auth/login", {
+    const res = await fetch(`${REACT_APP_BASE_URL}/api/v1/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

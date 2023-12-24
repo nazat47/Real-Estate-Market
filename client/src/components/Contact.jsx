@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 const Contact = ({ listing }) => {
+  const REACT_APP_BASE_URL=process.env.REACT_APP_BASE_URL
   const [landlord, setLandlord] = useState(null);
   const [emailData, setEmailData] = useState({
     message: "",
@@ -10,7 +11,7 @@ const Contact = ({ listing }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`https://real-estate-market-backend.onrender.com/api/v1/user/${listing.userRef}`);
+        const res = await fetch(`${REACT_APP_BASE_URL}/api/v1/user/${listing.userRef}`);
         const data = await res.json();
         setLandlord(data);
       } catch (error) {
@@ -21,7 +22,7 @@ const Contact = ({ listing }) => {
   }, [listing.userRef]);
   const handleEmail = async (e) => {
     e.preventDefault();
-    const res = await fetch("https://real-estate-market-backend.onrender.com/api/v1/user/email", {
+    const res = await fetch(`${REACT_APP_BASE_URL}/api/v1/user/email`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

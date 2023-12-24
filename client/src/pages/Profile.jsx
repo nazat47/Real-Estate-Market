@@ -32,6 +32,7 @@ import { useDispatch } from "react-redux";
 //   }
 // }
 const Profile = () => {
+  const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
   const dispatch = useDispatch();
   const [file, setFile] = useState(undefined);
   const fileRef = useRef(null);
@@ -77,13 +78,16 @@ const Profile = () => {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
-      const res = await fetch(`https://real-estate-market-backend.onrender.com/api/v1/user/updateuser/${currentUser._id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        `${REACT_APP_BASE_URL}/api/v1/user/updateuser/${currentUser._id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
       const data = await res.json();
       if (data.msg) {
         dispatch(updateUserFailure(data.msg));
@@ -98,7 +102,7 @@ const Profile = () => {
   const handleDelete = async (e) => {
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`/api/v1/user/deleteuser/${currentUser._id}`, {
+      const res = await fetch(`${REACT_APP_BASE_URL}/api/v1/user/deleteuser/${currentUser._id}`, {
         method: "DELETE",
       });
       const data = await res.json();
@@ -114,7 +118,7 @@ const Profile = () => {
   const handleLogout = async () => {
     try {
       dispatch(logoutUserStart());
-      const res = await fetch("/api/v1/auth/logout");
+      const res = await fetch(`${REACT_APP_BASE_URL}/api/v1/auth/logout`);
       const data = await res.json();
       if (data.msg) {
         dispatch(logoutUserFailure(data.msg));
@@ -128,7 +132,7 @@ const Profile = () => {
   const handleShowListing = async () => {
     try {
       setShowListError(false);
-      const res = await fetch(`/api/v1/user/listing/${currentUser._id}`);
+      const res = await fetch(`${REACT_APP_BASE_URL}/api/v1/user/listing/${currentUser._id}`);
       const data = await res.json();
       if (data.msg) {
         setShowListError(true);
@@ -138,17 +142,17 @@ const Profile = () => {
       setShowListError(true);
     }
   };
-  const handleDeleteListing=async(id)=>{
+  const handleDeleteListing = async (id) => {
     try {
-      const res=await fetch(`/api/v1/listing/${id}`,{
-        method:"DELETE"
-      })
-      const data=await res.json();
-      setUserListing(prev=>prev.filter(list=>list._id!==id))
+      const res = await fetch(`${REACT_APP_BASE_URL}/api/v1/listing/${id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      setUserListing((prev) => prev.filter((list) => list._id !== id));
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center m-7">Profile</h1>
@@ -245,7 +249,9 @@ const Profile = () => {
       {showListError && <p>Something went wrong</p>}
       {userListing && userListing.length > 0 && (
         <div className="flex flex-col gap-4">
-          <h1 className="text-center text-slate-800 mt-7 text-2xl font-semibold">Your Listings</h1>
+          <h1 className="text-center text-slate-800 mt-7 text-2xl font-semibold">
+            Your Listings
+          </h1>
 
           {userListing.map((list) => {
             return (
@@ -268,11 +274,14 @@ const Profile = () => {
                 </Link>
                 <div className="flex gap-3">
                   <Link to={`/updatelisting/${list._id}`}>
-                  <button className="text-blue-900 font-semibold uppercase">
-                    Edit
-                  </button>
+                    <button className="text-blue-900 font-semibold uppercase">
+                      Edit
+                    </button>
                   </Link>
-                  <button onClick={()=>handleDeleteListing(list._id)} className="text-red-700 font-semibold uppercase">
+                  <button
+                    onClick={() => handleDeleteListing(list._id)}
+                    className="text-red-700 font-semibold uppercase"
+                  >
                     Delete
                   </button>
                 </div>

@@ -9,6 +9,7 @@ import {
 } from "firebase/storage";
 import { app } from "../firebase";
 const CreateListings = () => {
+  const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
   const [files, setFiles] = useState([]);
   const [imgError, setImgError] = useState(false);
@@ -35,15 +36,17 @@ const CreateListings = () => {
   useEffect(() => {
     const fetchData = async () => {
       const id = params.id;
-      const res = await fetch(`https://real-estate-market-backend.onrender.com/api/v1/listing/${id}`);
+      const res = await fetch(
+        `${REACT_APP_BASE_URL}/api/v1/listing/${id}`
+      );
       const data = await res.json();
-      if(data.msg){
-        console.log(data.msg)
+      if (data.msg) {
+        console.log(data.msg);
       }
       setFormData(data);
-      console.log(formData)
+      console.log(formData);
     };
-    fetchData()
+    fetchData();
   }, []);
   const handleImageSubmit = (e) => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
@@ -141,7 +144,7 @@ const CreateListings = () => {
       }
       setFormLoad(true);
       setFormError(false);
-      const res = await fetch(`/api/v1/listing/${params.id}`, {
+      const res = await fetch(`${REACT_APP_BASE_URL}/api/v1/listing/${params.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

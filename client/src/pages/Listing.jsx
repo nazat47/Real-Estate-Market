@@ -17,6 +17,7 @@ import {
 } from "react-icons/fa";
 import Contact from "../components/Contact";
 const Listing = () => {
+  const REACT_APP_BASE_URL=process.env.REACT_APP_BASE_URL
   SwiperCore.use([Navigation]);
   const params = useParams();
   const [listing, setListing] = useState(null);
@@ -29,7 +30,7 @@ const Listing = () => {
     const fetchListing = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`https://real-estate-market-backend.onrender.com/api/v1/listing/${params.id}`);
+        const res = await fetch(`${REACT_APP_BASE_URL}/api/v1/listing/${params.id}`);
         const data = await res.json();
         if (data.msg) {
           setError(true);

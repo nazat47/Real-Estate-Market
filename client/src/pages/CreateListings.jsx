@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import {
   getDownloadURL,
   getStorage,
@@ -9,7 +9,8 @@ import {
 } from "firebase/storage";
 import { app } from "../firebase";
 const CreateListings = () => {
-  const navigate=useNavigate()
+  const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
+  const navigate = useNavigate();
   const [files, setFiles] = useState([]);
   const [imgError, setImgError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -119,7 +120,6 @@ const CreateListings = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-
       if (formData.imageUrls.length < 1) {
         return setFormError("Please upload atleast one image");
       }
@@ -128,19 +128,22 @@ const CreateListings = () => {
       }
       setFormLoad(true);
       setFormError(false);
-      const res = await fetch("https://real-estate-market-backend.onrender.com/api/v1/listing/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...formData, userRef: currentUser._id }),
-      });
+      const res = await fetch(
+        `${REACT_APP_BASE_URL}/api/v1/listing/create`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...formData, userRef: currentUser._id }),
+        }
+      );
       const data = await res.json();
       setFormLoad(false);
       if (data.msg) {
         setFormError(data.msg);
       }
-      navigate(`/listing/${data._id}`)
+      navigate(`/listing/${data._id}`);
     } catch (error) {
       console.log(error);
       setFormError(error.message);
@@ -325,24 +328,24 @@ const CreateListings = () => {
           {formData.imageUrls.length > 0 &&
             formData.imageUrls.map((url, index) => {
               return (
-              <div
-                key={url}
-                className="flex justify-between p-3 border items-center"
-              >
-                <img
-                  src={url}
-                  alt="listing image"
-                  className="w-20 h-20 object-contain rounded-lg"
-                ></img>
-                <button
-                  type="button"
-                  onClick={() => handleRemoveImg(index)}
-                  className="p-3 text-red-700 rounded-lg uppercase hover:text-red-800"
+                <div
+                  key={url}
+                  className="flex justify-between p-3 border items-center"
                 >
-                  Delete
-                </button>
-              </div>
-              )
+                  <img
+                    src={url}
+                    alt="listing image"
+                    className="w-20 h-20 object-contain rounded-lg"
+                  ></img>
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveImg(index)}
+                    className="p-3 text-red-700 rounded-lg uppercase hover:text-red-800"
+                  >
+                    Delete
+                  </button>
+                </div>
+              );
             })}
           <button
             disabled={formLoad || loading}

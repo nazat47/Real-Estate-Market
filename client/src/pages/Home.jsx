@@ -23,13 +23,16 @@ const variant = {
 };
 
 const Home = () => {
+  const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
   const [offerListing, setOfferListing] = useState([]);
   const [rentListing, setRentListing] = useState([]);
   const [sellListing, setSellListing] = useState([]);
   useEffect(() => {
     const fetchOfferListing = async () => {
       try {
-        const res = await fetch("https://real-estate-market-backend.onrender.com/api/v1/listing/get/all?offer=true&limit=4");
+        const res = await fetch(
+          `${REACT_APP_BASE_URL}/api/v1/listing/get/all?offer=true&limit=4`
+        );
         const data = await res.json();
         setOfferListing(data);
         fetchRentListing();
@@ -40,7 +43,9 @@ const Home = () => {
     fetchOfferListing();
     const fetchRentListing = async () => {
       try {
-        const res = await fetch("https://real-estate-market-backend.onrender.com/api/v1/listing/get/all?type=rent&limit=4");
+        const res = await fetch(
+          `${REACT_APP_BASE_URL}/api/v1/listing/get/all?type=rent&limit=4`
+        );
         const data = await res.json();
         setRentListing(data);
         fetchSellListing();
@@ -50,7 +55,9 @@ const Home = () => {
     };
     const fetchSellListing = async () => {
       try {
-        const res = await fetch("https://real-estate-market-backend.onrender.com/api/v1/listing/get/all?type=sell&limit=4");
+        const res = await fetch(
+          `${REACT_APP_BASE_URL}/api/v1/listing/get/all?type=sell&limit=4`
+        );
         const data = await res.json();
         setSellListing(data);
       } catch (error) {
@@ -96,7 +103,11 @@ const Home = () => {
                   // }}
                   className="h-[450px] w-full"
                 >
-                  <img className="object-strech h-full w-full" src={list.imageUrls[0]} alt="List" />
+                  <img
+                    className="object-strech h-full w-full"
+                    src={list.imageUrls[0]}
+                    alt="List"
+                  />
                 </div>
               </SwiperSlide>
             ))}

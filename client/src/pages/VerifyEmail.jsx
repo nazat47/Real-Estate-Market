@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 const VerifyEmail = () => {
+  const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
   const location = useLocation();
   const [otpData, setOtpData] = useState({
@@ -9,9 +10,9 @@ const VerifyEmail = () => {
   });
   const [error, setError] = useState(false);
   const handleOtp = async () => {
-    console.log(otpData)
+    console.log(otpData);
     try {
-      const res = await fetch("https://real-estate-market-backend.onrender.com/api/v1/user/email/verify", {
+      const res = await fetch(`${REACT_APP_BASE_URL}/api/v1/user/email/verify`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
